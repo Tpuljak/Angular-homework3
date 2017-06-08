@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Script.Serialization;
 
 namespace newsAdding
@@ -28,11 +24,13 @@ namespace newsAdding
             Name = name;
             Comments = comments;
             Raiting = raiting;
+            Favorite = false;
         }
         public int Id { get; set; }
         public string Name { get; set; }
         public List<Comment> Comments { get; set; }
         public int Raiting { get; set; }
+        public bool Favorite { get; set; }
     }
 
     class Program
@@ -42,18 +40,20 @@ namespace newsAdding
             var comments = new List<Comment>(5);
             for(int i = startingId; i < startingId + 5; i++)
             {
-                comments.Add(new Comment(i, "Some random text and number" + new Random().Next(1, 10000).ToString()));
+                comments.Add(new Comment(i, "Some random text and number" + rnd.Next(1,10000).ToString()));
             }
 
             return comments;
         }
 
+        static Random rnd = new Random();
         static private List<News> SeedNews()
         {
             var news = new List<News>(15);
-            for(int i = 0; i < 15; i++)
+            
+            for (int i = 0; i < 15; i++)
             {
-                news.Add(new News(i, "News" + (i + 1).ToString(), SeedComments(i * 5), new Random().Next(1, 10)));
+                news.Add(new News(i, "News" + (i + 1).ToString(), SeedComments(i * 5), rnd.Next(1,10)));
             }
 
             return news;

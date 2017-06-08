@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>News list</title>
+    <script src="../scripts/vendor/angular-local-storage.js"></script>
+    <script src="../scripts/vendor/lodash.js"></script>
+    <script src="../scripts/app/app.configure.js"></script>
+    <script src="../scripts/app/app.storage.js"></script>
+    <script src="../scripts/vendor/angular-ui-router.js"></script>
+    <script src="../scripts/vendor/angular.js"></script>
+    <script src="home.controller.js"></script>
+
+</head>
+<body ng-app="app">
+    <div ng-controller="HomeController">
+        <div ng-repeat="news in newsToShow">
+            {{news.Name}}
+            <button ng-show="!news.Favorite" ng-click="AddToFavorites(news.Id)">Dodaj za favorita</button>
+            <span ng-show="news.Favorite">Favorit</span>
+            <button ui-sref="details({newsId: {{news.Id}}})">Detalji</button>
+        </div>
+        <button ng-show="unshownNews" ng-click="AddMoreNews()">Dodaj još novosti</button>
+        <span ng-show="!unshownNews">Sve novosti su prikazane</span>
+    </div>
+</body>
+</html>
