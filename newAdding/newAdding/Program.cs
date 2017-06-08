@@ -1,0 +1,78 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Script.Serialization;
+
+namespace newsAdding
+{
+    class Comment
+    {
+        public Comment(int id, string text)
+        {
+            Id = id;
+            Text = text;
+        }
+        public int Id { get; set; }
+        public string Text { get; set; }
+    }
+
+    class News
+    {
+        public News(int id, string name, List<Comment> comments, int raiting)
+        {
+            Id = id;
+            Name = name;
+            Comments = comments;
+            Raiting = raiting;
+        }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public List<Comment> Comments { get; set; }
+        public int Raiting { get; set; }
+    }
+
+    class Program
+    {
+        static private List<Comment> SeedComments(int startingId)
+        {
+            var comments = new List<Comment>(5);
+            for(int i = startingId; i < startingId + 5; i++)
+            {
+                comments.Add(new Comment(i, "Some random text and number" + new Random().Next(1, 10000).ToString()));
+            }
+
+            return comments;
+        }
+
+        static private List<News> SeedNews()
+        {
+            var news = new List<News>(15);
+            for(int i = 0; i < 15; i++)
+            {
+                news.Add(new News(i, "News" + (i + 1).ToString(), SeedComments(i * 5), new Random().Next(1, 10)));
+            }
+
+            return news;
+        }
+
+        static void Main(string[] args)
+        {
+            var news = new List<News>();
+            news = SeedNews();
+
+            string jsonData = new JavaScriptSerializer().Serialize(news);
+
+            string filePath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
+            filePath = Directory.GetParent(filePath).FullName;
+            filePath = Directory.GetParent(filePath).FullName;
+            filePath = Directory.GetParent(filePath).FullName;
+            filePath = Directory.GetParent(filePath).FullName;
+
+            File.WriteAllText(filePath + "/data/newsList.json", jsonData);
+        }
+    }
+}
