@@ -1,17 +1,18 @@
 ﻿angular.module('app').controller('HomeController', function ($state, $scope, localStorageService, AddToFavoritesService) {
-    $scope.newsList = _.chunk(angular.fromJson(localStorageService.get("news")), 6);
+    $scope.newsList = angular.fromJson(localStorageService.get("news"));
 
-    $scope.newsToShow = $scope.newsList[0];
-    $scope.next = 1;
+    $scope.newsToShow = _.take($scope.newsList, 6);
+    $scope.next = 12;
     $scope.unshownNews = true;
 
     $scope.AddMoreNews = function () {
-        $scope.newsToShow = _.concat($scope.newsToShow, $scope.newsList[$scope.next++]);
-        if ($scope.next === 3)
+        $scope.newsToShow = _.take($scope.newsList, $scope.next);
+        if ($scope.next === 15)
             $scope.unshownNews = false;
+        $scope.next = 15;
     }
 
     $scope.AddToFavorites = function (newsId) {
-        AddToFavoritesService.setToFavorites($scope.newsToShow, newsId);
+        AddToFavoritesService.setNewsToFavorite($scope, localStorageService, newsId);
     }
 })

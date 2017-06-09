@@ -20,28 +20,38 @@ angular.module('app').config(function ($locationProvider, $stateProvider) {
 });
 
 angular.module('app').service('AddToFavoritesService', function () {
-    this.setNewsToFavorite = function (newsList, selectedNewsId) {
-        var indexOfSelectedNews = _.findIndex(newsList, news => news.Id === selectedNewsId);
-        newsList[indexOfSelectedNews].Favorite = true;
-        localStorageService.set("news", angular.toJson(newsList));
+    this.setNewsToFavorite = function ($scope, localStorageService, selectedNewsId) {
+        var indexOfSelectedNews = _.findIndex($scope.newsToShow, news => news.Id === selectedNewsId);
+        $scope.newsToShow[indexOfSelectedNews].Favorite = true;
+        localStorageService.set("news", angular.toJson($scope.newsToShow));
     }
 });
 
 angular.module('app').service('GetNewsService', function (localStorageService) {
     this.getNews = function (newsId) {
-        return _.find(angular.fromJson(localStorageService.get("news"), news => news.Id == newsId));
+        return _.find(angular.fromJson(localStorageService.get("news")), news => news.Id == newsId);
     }
 });
 
-angular.module('app').directive('commentLister', function (localStorageService, attrs) {
+angular.module('app').directive('commentLister', function (localStorageService) {
     return {
         restrict: "EA",
         scope: {
-            comments: _.take((_.find(angular.fromJson(localStorageService.get("news")), news => news.Id == attrs.newsId).Comments, parseInt(attr.commentsToDisplay)))
+            newsId: '@',
+            listAllComments: '@'
         },
         template: '<div ng-repeat="comment in comments">{{comment.Text}}</div>',
-        controller: function () {
-            console.log("a");
+        controller: function ($scope) {
+            var newsList = angular.fromJson(localStorageService.get("news"));
+            if ($scope.listAllComments) {
+                $scope.comments = _.find(newsList, news => news.Id == $scope.newsId).Comments;
+            }
+            else {
+                $scope.comments = _
+                    .chain(newsList)
+                    .find(news => news.Id == $scope.newsId)
+                    .take(newsList.Comments, 2);
+            }
         }
     }
 });

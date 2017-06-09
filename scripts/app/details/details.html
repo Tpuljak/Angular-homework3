@@ -16,10 +16,14 @@
         <h1>
             {{news.Name}}
         </h1>
-        <button ng-show="!news.Favorite">Dodaj za favorita</button>
+        <button ng-show="!news.Favorite" ng-click="AddToFavorites(news.Id)">Dodaj za favorita</button>
         <span ng-show="news.Favorite">Favorit</span>
-        <comment-lister news-id="{{news.Id}}", comments-to-display="5"></comment-lister>
-        {{news.Raiting}}
+        <br />
+        <comment-lister news-id="{{news.Id}}", list-all-comments="true"></comment-lister>
+        <br />
+        {{news.Raiting}} {{raitingText}}
+        <br />
+        <button ui-sref="home">Povratak</button>
     </div>
 </body>
 </html>

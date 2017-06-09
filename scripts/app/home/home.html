@@ -16,7 +16,7 @@
     <div ng-controller="HomeController">
         <div ng-repeat="news in newsToShow">
             {{news.Name}}
-            <button ng-show="!news.Favorite" ng-click="AddToFavorite(newsId)">Dodaj za favorita</button>
+            <button ng-show="!news.Favorite" ng-click="AddToFavorites(news.Id)">Dodaj za favorita</button>
             <span ng-show="news.Favorite">Favorit</span>
             <button ui-sref="details({newsId: {{news.Id}}})">Detalji</button>
         </div>
