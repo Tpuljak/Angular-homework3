@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('HomeController', function ($state, $scope, localStorageService) {
+﻿angular.module('app').controller('HomeController', function ($state, $scope, localStorageService, AddToFavoritesService) {
     $scope.newsList = _.chunk(angular.fromJson(localStorageService.get("news")), 6);
 
     $scope.newsToShow = $scope.newsList[0];
@@ -12,8 +12,6 @@
     }
 
     $scope.AddToFavorites = function (newsId) {
-        var indexOfSelectedNews = _.findIndex($scope.newsToShow, news => news.Id === newsId);
-        $scope.newsToShow[indexOfSelectedNews].Favorite = true;
-        localStorageService.set("news", angular.toJson($scope.newsToShow));
+        AddToFavoritesService.setToFavorites($scope.newsToShow, newsId);
     }
 })

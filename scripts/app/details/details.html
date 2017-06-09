@@ -14,8 +14,12 @@
 <body ng-app="app">
     <div ng-contorller="DetailsController">
         <h1>
-            {{news}}
+            {{news.Name}}
         </h1>
+        <button ng-show="!news.Favorite">Dodaj za favorita</button>
+        <span ng-show="news.Favorite">Favorit</span>
+        <comment-lister news-id="{{news.Id}}", comments-to-display="5"></comment-lister>
+        {{news.Raiting}}
     </div>
 </body>
 </html>
