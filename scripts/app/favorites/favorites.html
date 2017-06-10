@@ -1,0 +1,12 @@
+﻿<h1>
+    FAVORITI:
+</h1>
+<input type="text" placeholder="Pretraži favorite" ng-model="searchInput" ng-change="search()" ng-show="anyFavorites"/>
+<h2 ng-show="!anyFavorites">Nema favorita</h2>
+<div ng-repeat="news in favoriteNewsList">
+    {{news.Name}}
+    <comment-lister news-id="{{news.Id}}" list-all-comments="false"></comment-lister>
+    <button ui-sref="details({newsId: {{news.Id}}})">Detalji</button>
+    <button ng-click="removeFromFavorites(news.Id)">Izbriši iz favorita</button>
+</div>
+<button ui-sref="home">Početna</button>

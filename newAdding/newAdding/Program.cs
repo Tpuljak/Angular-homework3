@@ -53,7 +53,7 @@ namespace newsAdding
             
             for (int i = 0; i < 15; i++)
             {
-                news.Add(new News(i, "News" + (i + 1).ToString(), SeedComments(i * 5), rnd.Next(1,10)));
+                news.Add(new News(i + 1, "News" + (i + 1).ToString(), SeedComments(i * 5), rnd.Next(1,10)));
             }
 
             return news;

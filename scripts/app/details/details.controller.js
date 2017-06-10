@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('DetailsController', function ($state, $scope, localStorageService, $stateParams, GetNewsService, AddToFavoritesService) {
+﻿angular.module('app').controller('DetailsController', function ($scope, $rootScope, localStorageService, $stateParams, GetNewsService, AddToFavoritesService) {
     $scope.news = GetNewsService.getNews($stateParams.newsId);
 
     switch ($scope.news.Raiting) {
@@ -24,6 +24,7 @@
     }
 
     $scope.AddToFavorites = function (newsId) {
-        AddToFavoritesService.setNewsToFavorite($scope, localStorageService, newsId);
+        AddToFavoritesService.setNewsToFavorite($scope, $rootScope, localStorageService, newsId);
+        $scope.news.Favorite = true;
     }
 });
