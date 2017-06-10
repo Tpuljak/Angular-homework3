@@ -6,5 +6,6 @@
     <span ng-show="news.Favorite">Favorit</span>
     <button ui-sref="details({newsId: {{news.Id}}})">Detalji</button>
 </div>
+<br />
 <button ng-show="unshownNews" ng-click="AddMoreNews()">Dodaj još novosti</button>
 <span ng-show="!unshownNews">Sve novosti su prikazane</span>

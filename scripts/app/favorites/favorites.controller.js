@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('FavoritesController', function ($state, $scope, $rootScope, localStorageService, GetNewsService, AddToFavoritesService, SearchNewsService) {
+﻿angular.module('app').controller('FavoritesController', function ($state, $scope, $rootScope, localStorageService, SearchNewsService) {
     $scope.favoriteNewsList = _.filter($rootScope.newsList, news => news.Favorite === true);
 
     $scope.anyNews = function () {

@@ -7,9 +7,10 @@
 
     $scope.AddMoreNews = function () {
         $rootScope.newsToShow = _.take($rootScope.newsList, $scope.next);
-        if ($scope.next === 15)
+        if ($scope.next > $rootScope.newsList.length)
             $scope.unshownNews = false;
-        $scope.next = 15;
+        $scope.next += 6;
+        $scope.searchInput = "";
     }
 
     $scope.AddToFavorites = function (newsId) {
@@ -19,12 +20,7 @@
     $scope.search = function () {
         $rootScope.newsToShow = SearchNewsService.search($scope.searchInput, false, $rootScope);
         if ($scope.searchInput === "") {
-            if ($scope.next === 12)
-                $rootScope.newsToShow = _.take($rootScope.newsList, 6);
-            else if ($scope.unshownNews === true)
-                $rootScope.newsToShow = _.take($rootScope.newsList, 12);
-            else
-                $rootScope.newsToShow = $rootScope.newsList;
+            $rootScope.newsToShow = _.take($rootScope.newsList, $scope.next - 6);
         }
     }
 })

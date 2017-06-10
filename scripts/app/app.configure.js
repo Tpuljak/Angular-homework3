@@ -1,21 +1,5 @@
-﻿angular.module('app').config(function ($locationProvider, $stateProvider) {
+﻿angular.module('app').config(function ($locationProvider) {
     $locationProvider.html5Mode(true);
-    $stateProvider
-        .state('home', {
-            url: '/',
-            controller: 'HomeController',
-            templateUrl: 'scripts/app/home/home.html'
-        })
-        .state('details', {
-            url: '/details/:newsId',
-            controller: 'DetailsController',
-            templateUrl: 'scripts/app/details/details.html'
-        })
-        .state('favorites', {
-            url: '/favorites',
-            controller: 'FavoritesController',
-            templateUrl: 'scripts/app/favorites/favorites.html'
-        })
 });
 
 angular.module('app').service('AddToFavoritesService', function () {
